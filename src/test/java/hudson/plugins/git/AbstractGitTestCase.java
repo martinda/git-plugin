@@ -4,6 +4,7 @@ import static org.apache.commons.lang.StringUtils.isBlank;
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.Functions;
+import hudson.Launcher;
 import hudson.matrix.MatrixBuild;
 import hudson.matrix.MatrixProject;
 import hudson.model.FreeStyleBuild;
@@ -31,6 +32,7 @@ import hudson.util.StreamTaskListener;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.List;
 
@@ -285,5 +287,15 @@ public abstract class AbstractGitTestCase extends HudsonTestCase {
                     }
                 }
             });
+    }
+
+    /** A utility method that displays a git repo. Useful to visualise merges. */
+    public void showRepo(TestGitRepo repo, String msg) throws Exception {
+        System.out.println("*********** "+msg+" ***********");
+        ByteArrayOutputStream out;
+        int returnCode;
+        out = new ByteArrayOutputStream();
+        returnCode = new Launcher.LocalLauncher(listener).launch().cmds("git", "log","--all","--graph","--decorate","--oneline").pwd(repo.gitDir.getCanonicalPath()).stdout(out).join();
+        System.out.println(out.toString());
     }
 }
