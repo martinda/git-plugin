@@ -76,6 +76,9 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
         return MergeCommand.GitPluginFastForwardMode.FF;
     }
 
+    public String toString() {
+        return "strategy: "+getMergeStrategy()+", fastForwardMode: "+getFastForwardMode();
+    }
 
     @Extension
     public static class DescriptorImpl extends Descriptor<UserMergeOptions> {
