@@ -40,7 +40,7 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
     }
 
     public UserMergeOptions(PreBuildMergeOptions pbm) {
-        this(pbm.getRemoteBranchName(),pbm.getMergeTarget(),pbm.getMergeStrategy().toString(),pbm.getFastForwardMode().toString());
+        this(pbm.getRemoteBranchName(), pbm.getMergeTarget(), pbm.getMergeStrategy().toString(), pbm.getFastForwardMode().toString());
     }
 
     /**
