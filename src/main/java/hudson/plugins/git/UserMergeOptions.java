@@ -23,6 +23,14 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
     private String mergeStrategy;
     private String fastForwardMode;
 
+    /**
+     * @deprecated use the new constructor that allows to set the fast forward mode.
+     */
+    @Deprecated
+    public UserMergeOptions(String mergeRemote, String mergeTarget, String mergeStrategy) {
+        this(mergeRemote, mergeTarget, mergeStrategy, MergeCommand.GitPluginFastForwardMode.FF.toString());
+    }
+
     @DataBoundConstructor
     public UserMergeOptions(String mergeRemote, String mergeTarget, String mergeStrategy, String fastForwardMode) {
         this.mergeRemote = mergeRemote;
