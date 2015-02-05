@@ -906,7 +906,7 @@ public class GitSCMTest extends AbstractGitTestCase {
                 false, Collections.<SubmoduleConfig>emptyList(),
                 null, null,
                 Collections.<GitSCMExtension>emptyList());
-        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", "default", "ff")));
+        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", "default", "--ff")));
         project.setScm(scm);
 
         // create initial commit and then run the build against it:
@@ -945,7 +945,7 @@ public class GitSCMTest extends AbstractGitTestCase {
                 false, Collections.<SubmoduleConfig>emptyList(),
                 null, null,
                 Collections.<GitSCMExtension>emptyList());
-        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", "default", "ff")));
+        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", "default", "--ff")));
         project.setScm(scm);
 
         // create initial commit and then run the build against it:
