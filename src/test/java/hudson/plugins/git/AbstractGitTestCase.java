@@ -52,17 +52,17 @@ import org.jvnet.hudson.test.CaptureEnvironmentBuilder;
  * @author ishaaq
  */
 public abstract class AbstractGitTestCase extends HudsonTestCase {
-	protected TaskListener listener;
+    protected TaskListener listener;
 
-	protected TestGitRepo testRepo;
-	
-	// aliases of testRepo properties
-	protected PersonIdent johnDoe;
-	protected PersonIdent janeDoe;
-	protected File workDir; // aliases "gitDir"
-	protected FilePath workspace; // aliases "gitDirPath"
-	protected GitClient git;
-	
+    protected TestGitRepo testRepo;
+
+    // aliases of testRepo properties
+    protected PersonIdent johnDoe;
+    protected PersonIdent janeDoe;
+    protected File workDir; // aliases "gitDir"
+    protected FilePath workspace; // aliases "gitDirPath"
+    protected GitClient git;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -91,18 +91,18 @@ public abstract class AbstractGitTestCase extends HudsonTestCase {
 
     protected void commit(final String fileName, final PersonIdent committer, final String message)
             throws GitException, InterruptedException {
-    	testRepo.commit(fileName, committer, message);
+        testRepo.commit(fileName, committer, message);
     }
 
     protected void commit(final String fileName, final String fileContent, final PersonIdent committer, final String message)
 
             throws GitException, InterruptedException {
-    	testRepo.commit(fileName, fileContent, committer, message);
+        testRepo.commit(fileName, fileContent, committer, message);
     }
 
     protected void commit(final String fileName, final PersonIdent author, final PersonIdent committer,
                         final String message) throws GitException, InterruptedException {
-    	testRepo.commit(fileName, author, committer, message);
+        testRepo.commit(fileName, author, committer, message);
     }
 
     protected List<UserRemoteConfig> createRemoteRepositories() throws IOException {
@@ -292,10 +292,9 @@ public abstract class AbstractGitTestCase extends HudsonTestCase {
     /** A utility method that displays a git repo. Useful to visualise merges. */
     public void showRepo(TestGitRepo repo, String msg) throws Exception {
         System.out.println("*********** "+msg+" ***********");
-        ByteArrayOutputStream out;
-        int returnCode;
-        out = new ByteArrayOutputStream();
-        returnCode = new Launcher.LocalLauncher(listener).launch().cmds("git", "log","--all","--graph","--decorate","--oneline").pwd(repo.gitDir.getCanonicalPath()).stdout(out).join();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int returnCode = new Launcher.LocalLauncher(listener).launch().cmds("git", "log","--all","--graph","--decorate","--oneline").pwd(repo.gitDir.getCanonicalPath()).stdout(out).join();
         System.out.println(out.toString());
+        out.close();
     }
 }
