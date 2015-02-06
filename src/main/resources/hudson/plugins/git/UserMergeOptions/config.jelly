@@ -13,8 +13,8 @@
   <f:entry title="Merge strategy" field="mergeStrategy">
       <f:select />
   </f:entry>
-  <f:entry title="Fast forward mode" field="fastForwardMode">
-      <f:enum field="fastForwardMode">
+  <f:entry title="Fast-forward mode" field="fastForwardMode">
+      <f:enum>
           ${it.toString()}
       </f:enum>
   </f:entry>

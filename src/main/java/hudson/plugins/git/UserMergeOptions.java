@@ -21,18 +21,19 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
     private String mergeRemote;
     private String mergeTarget;
     private String mergeStrategy;
-    private String fastForwardMode;
+    private MergeCommand.GitPluginFastForwardMode fastForwardMode;
 
     /**
      * @deprecated use the new constructor that allows to set the fast forward mode.
      */
     @Deprecated
     public UserMergeOptions(String mergeRemote, String mergeTarget, String mergeStrategy) {
-        this(mergeRemote, mergeTarget, mergeStrategy, MergeCommand.GitPluginFastForwardMode.FF.toString());
+        this(mergeRemote, mergeTarget, mergeStrategy, MergeCommand.GitPluginFastForwardMode.FF);
     }
 
     @DataBoundConstructor
-    public UserMergeOptions(String mergeRemote, String mergeTarget, String mergeStrategy, String fastForwardMode) {
+    public UserMergeOptions(String mergeRemote, String mergeTarget, String mergeStrategy,
+                            MergeCommand.GitPluginFastForwardMode fastForwardMode) {
         this.mergeRemote = mergeRemote;
         this.mergeTarget = mergeTarget;
         this.mergeStrategy = mergeStrategy;
@@ -40,7 +41,7 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
     }
 
     public UserMergeOptions(PreBuildMergeOptions pbm) {
-        this(pbm.getRemoteBranchName(), pbm.getMergeTarget(), pbm.getMergeStrategy().toString(), pbm.getFastForwardMode().toString());
+        this(pbm.getRemoteBranchName(), pbm.getMergeTarget(), pbm.getMergeStrategy().toString(), pbm.getFastForwardMode());
     }
 
     /**
@@ -71,19 +72,49 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
 
     public MergeCommand.GitPluginFastForwardMode getFastForwardMode() {
         for (MergeCommand.GitPluginFastForwardMode ffMode : MergeCommand.GitPluginFastForwardMode.values())
-            if (ffMode.toString().equals(fastForwardMode))
+            if (ffMode.equals(fastForwardMode))
                 return ffMode;
         return MergeCommand.GitPluginFastForwardMode.FF;
     }
 
+    @Override
     public String toString() {
-        return "strategy: "+getMergeStrategy()+", fastForwardMode: "+getFastForwardMode();
+        return "UserMergeOptions{" +
+                "mergeRemote='" + mergeRemote + '\'' +
+                ", mergeTarget='" + mergeTarget + '\'' +
+                ", mergeStrategy='" + mergeStrategy + '\'' +
+                ", fastForwardMode='" + fastForwardMode + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserMergeOptions that = (UserMergeOptions) o;
+
+        if (fastForwardMode != null ? !fastForwardMode.equals(that.fastForwardMode) : that.fastForwardMode != null)
+            return false;
+        if (mergeRemote != null ? !mergeRemote.equals(that.mergeRemote) : that.mergeRemote != null) return false;
+        if (mergeStrategy != null ? !mergeStrategy.equals(that.mergeStrategy) : that.mergeStrategy != null)
+            return false;
+        if (mergeTarget != null ? !mergeTarget.equals(that.mergeTarget) : that.mergeTarget != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mergeRemote != null ? mergeRemote.hashCode() : 0;
+        result = 31 * result + (mergeTarget != null ? mergeTarget.hashCode() : 0);
+        result = 31 * result + (mergeStrategy != null ? mergeStrategy.hashCode() : 0);
+        result = 31 * result + (fastForwardMode != null ? fastForwardMode.hashCode() : 0);
+        return result;
     }
 
     @Extension
     public static class DescriptorImpl extends Descriptor<UserMergeOptions> {
-
-        private MergeCommand.GitPluginFastForwardMode fastForwardMode;
 
         @Override
         public String getDisplayName() {
@@ -95,10 +126,6 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
             for (MergeCommand.Strategy strategy: MergeCommand.Strategy.values())
                 m.add(strategy.toString(), strategy.toString());
             return m;
-        }
-
-        public MergeCommand.GitPluginFastForwardMode getFastForwardMode() {
-            return fastForwardMode;
         }
     }
 }
