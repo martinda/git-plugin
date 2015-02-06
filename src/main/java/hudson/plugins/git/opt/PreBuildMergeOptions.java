@@ -31,6 +31,12 @@ public class PreBuildMergeOptions implements Serializable {
      */
     public String mergeStrategy = MergeCommand.Strategy.DEFAULT.toString();
 
+    /**
+     * The fast forward mode.
+     * See the git merge documentation.
+     */
+    public String fastForwardMode = MergeCommand.GitPluginFastForwardMode.FF.toString();
+
     public RemoteConfig getMergeRemote() {
         return mergeRemote;
     }
@@ -58,6 +64,18 @@ public class PreBuildMergeOptions implements Serializable {
 
     public void setMergeStrategy(MergeCommand.Strategy mergeStrategy) {
         this.mergeStrategy = mergeStrategy.toString();
+    }
+
+    @Exported
+    public MergeCommand.GitPluginFastForwardMode getFastForwardMode() {
+        for (MergeCommand.GitPluginFastForwardMode ffMode : MergeCommand.GitPluginFastForwardMode.values())
+            if (ffMode.toString().equals(fastForwardMode))
+                return ffMode;
+        return MergeCommand.GitPluginFastForwardMode.FF;
+    }
+
+    public void setFastForwardMode(MergeCommand.GitPluginFastForwardMode fastForwardMode) {
+      this.fastForwardMode = fastForwardMode.toString();
     }
 
     @Exported

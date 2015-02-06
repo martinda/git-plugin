@@ -111,7 +111,7 @@ public class GitPublisherTest extends AbstractGitTestCase {
                 false, Collections.<SubmoduleConfig>emptyList(),
                 null, null,
                 Collections.<GitSCMExtension>emptyList());
-        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", null)));
+        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", null, null)));
         scm.getExtensions().add(new LocalBranch("integration"));
         project.setScm(scm);
 
@@ -231,7 +231,7 @@ public class GitPublisherTest extends AbstractGitTestCase {
                 Collections.singletonList(new BranchSpec("*")),
                 false, Collections.<SubmoduleConfig>emptyList(),
                 null, null, new ArrayList<GitSCMExtension>());
-        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", null)));
+        scm.getExtensions().add(new PreBuildMerge(new UserMergeOptions("origin", "integration", null, null)));
         scm.getExtensions().add(new LocalBranch("integration"));
         project.setScm(scm);
 
@@ -292,7 +292,7 @@ public class GitPublisherTest extends AbstractGitTestCase {
         String envReference = "${" + envName + "}";
 
         List<GitSCMExtension> scmExtensions = new ArrayList<GitSCMExtension>();
-        scmExtensions.add(new PreBuildMerge(new UserMergeOptions("origin", envReference, null)));
+        scmExtensions.add(new PreBuildMerge(new UserMergeOptions("origin", envReference, null, null)));
         scmExtensions.add(new LocalBranch(envReference));
         GitSCM scm = new GitSCM(
                 createRemoteRepositories(),

@@ -21,16 +21,18 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
     private String mergeRemote;
     private String mergeTarget;
     private String mergeStrategy;
+    private String fastForwardMode;
 
     @DataBoundConstructor
-    public UserMergeOptions(String mergeRemote, String mergeTarget, String mergeStrategy) {
+    public UserMergeOptions(String mergeRemote, String mergeTarget, String mergeStrategy, String fastForwardMode) {
         this.mergeRemote = mergeRemote;
         this.mergeTarget = mergeTarget;
         this.mergeStrategy = mergeStrategy;
+        this.fastForwardMode = fastForwardMode;
     }
 
     public UserMergeOptions(PreBuildMergeOptions pbm) {
-        this(pbm.getRemoteBranchName(),pbm.getMergeTarget(),pbm.getMergeStrategy().toString());
+        this(pbm.getRemoteBranchName(),pbm.getMergeTarget(),pbm.getMergeStrategy().toString(),pbm.getFastForwardMode().toString());
     }
 
     /**
@@ -59,6 +61,14 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
         return MergeCommand.Strategy.DEFAULT;
     }
 
+    public MergeCommand.GitPluginFastForwardMode getFastForwardMode() {
+        for (MergeCommand.GitPluginFastForwardMode ffMode : MergeCommand.GitPluginFastForwardMode.values())
+            if (ffMode.toString().equals(fastForwardMode))
+                return ffMode;
+        return MergeCommand.GitPluginFastForwardMode.FF;
+    }
+
+
     @Extension
     public static class DescriptorImpl extends Descriptor<UserMergeOptions> {
         @Override
@@ -71,6 +81,14 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
             for (MergeCommand.Strategy strategy: MergeCommand.Strategy.values())
                 m.add(strategy.toString(), strategy.toString());
             return m;
+        }
+
+        public ListBoxModel doFillFastForwardModeItems() {
+            ListBoxModel m = new ListBoxModel();
+            for (MergeCommand.GitPluginFastForwardMode ffMode: MergeCommand.GitPluginFastForwardMode.values())
+                m.add(ffMode.toString(), ffMode.toString());
+            return m;
+
         }
     }
 }
