@@ -82,6 +82,9 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
 
     @Extension
     public static class DescriptorImpl extends Descriptor<UserMergeOptions> {
+
+        private MergeCommand.GitPluginFastForwardMode fastForwardMode;
+
         @Override
         public String getDisplayName() {
             return "";
@@ -94,12 +97,8 @@ public class UserMergeOptions extends AbstractDescribableImpl<UserMergeOptions> 
             return m;
         }
 
-        public ListBoxModel doFillFastForwardModeItems() {
-            ListBoxModel m = new ListBoxModel();
-            for (MergeCommand.GitPluginFastForwardMode ffMode: MergeCommand.GitPluginFastForwardMode.values())
-                m.add(ffMode.toString(), ffMode.toString());
-            return m;
-
+        public MergeCommand.GitPluginFastForwardMode getFastForwardMode() {
+            return fastForwardMode;
         }
     }
 }

@@ -10,10 +10,12 @@
   <f:entry title="${%Branch to merge to}" field="mergeTarget">
     <f:textbox id="git.mergeTarget" clazz="required"/>
   </f:entry>
-  <f:entry title="Merge strategy:" field="mergeStrategy">
+  <f:entry title="Merge strategy" field="mergeStrategy">
       <f:select />
   </f:entry>
-  <f:entry title="Fast Forward Mode:" field="fastForwardMode">
-    <f:select />
+  <f:entry title="Fast forward mode" field="fastForwardMode">
+      <f:enum field="fastForwardMode">
+          ${it.toString()}
+      </f:enum>
   </f:entry>
 </j:jelly>
