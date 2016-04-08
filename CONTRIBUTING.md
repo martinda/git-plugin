@@ -24,7 +24,8 @@ Code coverage reporting is available as a maven target.  Please try
 your best to improve code coverage with tests when you submit.
 
 Before submitting your change, please review the findbugs output to
-assure that you haven't introduced new findbugs warnings.
+assure that you haven't introduced new findbugs warnings. You can run
+findbugs on the command line with `mvn findbugs:check`.
 
 Code formatting in the git plugin varies between files.  Try to
 maintain reasonable consistency with the existing files where
